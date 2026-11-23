@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>EXO Signs — Operations</title>
+  <meta name="description" content="Day-to-day operations dashboard for EXO Signs &amp; Graphics Co. Demo with sample data only.">
+  <meta name="theme-color" content="#0a0a0a">
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="top">
+    <div class="top-inner">
+      <a class="brand" href="#today">
+        <img src="images/logo-mark.svg" width="44" height="44" alt="EXO Signs &amp; Graphics Co.">
+        <div class="brand-text">
+          <p class="brand-name">EXO Signs</p>
+          <p class="brand-sub">Operations · <span class="be-seen">Be Seen!</span></p>
+        </div>
+      </a>
+      <div class="top-actions">
+        <span class="badge">Demo, sample data</span>
+        <button type="button" class="btn btn-ghost btn-sm" data-action="open-reset">Reset sample data</button>
+      </div>
+    </div>
+    <div class="kpi-bar" id="kpi-bar"></div>
+    <nav class="tabs" aria-label="Sections">
+      <a href="#today" data-nav="today">Today</a>
+      <a href="#leads" data-nav="leads">Leads</a>
+      <a href="#todo" data-nav="todo">To-do</a>
+      <a href="#projects" data-nav="projects">Projects</a>
+      <a href="#financials" data-nav="financials">Financials</a>
+    </nav>
+    <div id="alert-bar" class="alert-bar" hidden></div>
+  </header>
+
+  <main id="main"></main>
+
+  <footer class="foot">
+    <p>All figures and names on this screen are <strong>sample data</strong> for a pitch demo.</p>
+    <p>Built by Trump Technology &amp; Engineering</p>
+  </footer>
+
+  <dialog id="dlg-lead" aria-labelledby="dlg-lead-title">
+    <form class="dlg-body" data-form="lead">
+      <h2 id="dlg-lead-title">Add lead</h2>
+      <div class="form-grid">
+        <label class="field">Name<input name="name" type="text" required autocomplete="name"></label>
+        <label class="field">Business<input name="business" type="text" required></label>
+        <label class="field">Request type
+          <select name="type" required></select>
+        </label>
+        <label class="field">Source
+          <select name="source" required></select>
+        </label>
+        <label class="field">Received
+          <input name="receivedAt" type="date" required>
+        </label>
+        <label class="field span-2">Notes
+          <textarea name="notes" rows="3"></textarea>
+        </label>
+      </div>
+      <div class="dlg-actions">
+        <button type="button" class="btn btn-ghost" data-action="close-dialog">Cancel</button>
+        <button type="submit" class="btn btn-primary">Add lead</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-task" aria-labelledby="dlg-task-title">
+    <form class="dlg-body" data-form="task">
+      <h2 id="dlg-task-title">Add task</h2>
+      <div class="form-grid">
+        <label class="field span-2">Task<input name="title" type="text" required></label>
+        <label class="field">Owner
+          <select name="owner" required></select>
+        </label>
+        <label class="field">Priority
+          <select name="priority" required></select>
+        </label>
+        <label class="field">Due
+          <input name="dueAt" type="date" required>
+        </label>
+        <label class="field">Linked job
+          <input name="linked" type="text" placeholder="Client or job name">
+        </label>
+      </div>
+      <div class="dlg-actions">
+        <button type="button" class="btn btn-ghost" data-action="close-dialog">Cancel</button>
+        <button type="submit" class="btn btn-primary">Add task</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-project" aria-labelledby="dlg-project-title">
+    <form class="dlg-body" data-form="project">
+      <h2 id="dlg-project-title">Add project</h2>
+      <div class="form-grid">
+        <label class="field">Client<input name="client" type="text" required></label>
+        <label class="field">Contact<input name="contact" type="text"></label>
+        <label class="field">Job type
+          <select name="type" required></select>
+        </label>
+        <label class="field">Stage
+          <select name="stage" required></select>
+        </label>
+        <label class="field">Start / install
+          <input name="startAt" type="date" required>
+        </label>
+        <label class="field">Value (A$)
+          <input name="value" type="number" min="0" step="50" required>
+        </label>
+        <label class="field span-2">Status
+          <select name="status" required></select>
+        </label>
+      </div>
+      <div class="dlg-actions">
+        <button type="button" class="btn btn-ghost" data-action="close-dialog">Cancel</button>
+        <button type="submit" class="btn btn-primary">Add project</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-convert" aria-labelledby="dlg-convert-title">
+    <form class="dlg-body" data-form="convert">
+      <h2 id="dlg-convert-title">Convert to project</h2>
+      <p class="lede" id="convert-summary"></p>
+      <input type="hidden" name="leadId">
+      <div class="form-grid">
+        <label class="field">Start / install
+          <input name="startAt" type="date" required>
+        </label>
+        <label class="field">Estimated value (A$)
+          <input name="value" type="number" min="0" step="50" required>
+        </label>
+      </div>
+      <div class="dlg-actions">
+        <button type="button" class="btn btn-ghost" data-action="close-dialog">Cancel</button>
+        <button type="submit" class="btn btn-primary">Create project</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="dlg-reset" aria-labelledby="dlg-reset-title">
+    <div class="dlg-body">
+      <h2 id="dlg-reset-title">Reset sample data?</h2>
+      <p class="lede">This replaces everything saved in this browser with the original sample set. Names and figures are still invented.</p>
+      <div class="dlg-actions">
+        <button type="button" class="btn btn-ghost" data-action="close-dialog">Cancel</button>
+        <button type="button" class="btn btn-danger" data-action="confirm-reset">Reset sample data</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
